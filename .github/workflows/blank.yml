@@ -2,26 +2,26 @@ name: tfrun
 
 on:
 
-workflow_dispatch:
-  inputs:
-    Base_image_version:
-      description: Version of base image
-      required: true
-      default: 1.0.0
-    Apps_image_version:
-      description: Version of apps iamge
-      required: true
-      defailt: 1.0.0
-    Test_choice:
-      description: test choice
-      type: choice
-      options:
-        -Muruga
-        -Vela
-        -Guha
-    Bool_test:
-      type: boolean
-      default: false
+  workflow_dispatch:
+    inputs:
+      Base_image_version:
+        description: Version of base image
+        required: true
+        default: 1.0.0
+      Apps_image_version:
+        description: Version of apps iamge
+        required: true
+        defailt: 1.0.0
+      Test_choice:
+        description: test choice
+        type: choice
+        options:
+          -Muruga
+          -Vela
+          -Guha
+      Bool_test:
+        type: boolean
+        default: false
 
 jobs:
   terraform:
