@@ -11,7 +11,7 @@ on:
       Apps_image_version:
         description: Version of apps iamge
         required: true
-        defailt: 1.0.0
+        default: 1.0.0
       Test_choice:
         description: test choice
         type: choice
