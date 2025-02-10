@@ -1,1 +1,55 @@
+name: tfrun
 
+on:
+
+workflow_dispatch:
+  inputs:
+    Base_image_version:
+      description: Version of base image
+      required: true
+      default: 1.0.0
+    Apps_image_version:
+      description: Version of apps iamge
+      required: true
+      defailt: 1.0.0
+    Test_choice:
+      description: test choice
+      type: choice
+      options:
+        -Muruga
+        -Vela
+        -Guha
+    Bool_test:
+      type: boolean
+      default: false
+
+jobs:
+  terraform:
+    name: Terraform Deployment
+    runs-on: ubuntu-latest  # Uses Ubuntu for the runner
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.6.0  # Specify Terraform version
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Validate
+        run: terraform validate
+
+      - name: Terraform Plan
+        run: terraform plan -out=tfplan
+        env:
+          TF_VAR_example: ${{ secrets.TF_VAR_EXAMPLE }}  # Example of using a secret
+
+      - name: Terraform Apply (Auto-Approve)
+        if: github.ref == 'refs/heads/main'  # Only applies on main branch
+        run: terraform apply -auto-approve tfplan
+        env:
+          TF_VAR_example: ${{ secrets.TF_VAR_EXAMPLE }}
